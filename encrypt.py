@@ -1,5 +1,5 @@
 import os
-import re
+import argparse
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
@@ -33,3 +33,16 @@ def split_and_encrypt(input_path, chunk_size, base_password):
             part_num += 1
     
     print(f"Archivo dividido y cifrado en {part_num-1} partes.")
+
+if __name__ == "__main__":
+    # Configurar el parser de argumentos
+    parser = argparse.ArgumentParser(description="Cifrar y dividir un archivo en partes.")
+    parser.add_argument("input_path", type=str, help="Ruta del archivo a cifrar")
+    parser.add_argument("chunk_size", type=int, help="Tamaño de cada parte en bytes")
+    parser.add_argument("base_password", type=str, help="Contraseña base para el cifrado")
+
+    # Obtener los argumentos
+    args = parser.parse_args()
+
+    # Ejecutar la función principal
+    split_and_encrypt(args.input_path, args.chunk_size, args.base_password)

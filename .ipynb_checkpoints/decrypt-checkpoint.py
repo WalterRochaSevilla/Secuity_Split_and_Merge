@@ -1,6 +1,6 @@
-# decrypt.py
 import os
 import re
+import argparse
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
@@ -55,3 +55,16 @@ def decrypt_and_merge(first_part_path, output_path, base_password):
     for _, part_path in part_files:
             os.remove(part_path)
     print(f"Archivo fusionado: {output_path}")
+
+if __name__ == "__main__":
+    # Configurar el parser de argumentos
+    parser = argparse.ArgumentParser(description="Descifrar y unir partes de un archivo.")
+    parser.add_argument("first_part_path", type=str, help="Ruta de la primera parte cifrada")
+    parser.add_argument("output_path", type=str, help="Ruta de salida del archivo descifrado")
+    parser.add_argument("base_password", type=str, help="Contraseña base para el descifrado")
+
+    # Obtener los argumentos
+    args = parser.parse_args()
+
+    # Ejecutar la función principal
+    decrypt_and_merge(args.first_part_path, args.output_path, args.base_password)
